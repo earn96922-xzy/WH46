@@ -1,1 +1,212 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WH46 Task</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+
+    body {
+        background: #051238;
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container {
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .rgb-box {
+        position: relative;
+        padding: 3px;
+        border-radius: 18px;
+        background: linear-gradient(90deg, red, blue, lime, red);
+        background-size: 300% 300%;
+        animation: rgbMove 3s linear infinite;
+        margin-bottom: 25px;
+    }
+
+    .rgb-inner {
+        background: #1d2b4a;
+        color: white;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    @keyframes rgbMove {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+    }
+
+    .notice-title {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        color: #ffd700;
+        margin-bottom: 20px;
+        line-height: 1.5;
+    }
+
+    .notice-text {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .notice-text p {
+        margin-bottom: 12px;
+    }
+
+    .task-btn {
+        width: 100%;
+        height: 85px;
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+        cursor: pointer;
+        background: #1e90ff;
+        color: white;
+        border-radius: 15px;
+    }
+
+    .back-btn {
+        width: 100%;
+        height: 55px;
+        border: none;
+        font-size: 18px;
+        font-weight: bold;
+        cursor: pointer;
+        background: #2f3542;
+        color: white;
+        border-radius: 12px;
+        transition: 0.3s;
+    }
+
+    .task-btn:hover, .back-btn:hover {
+        opacity: .9;
+    }
+
+    /* স্লাইডার সেকশন */
+    .marquee-container {
+        overflow: hidden;
+        white-space: nowrap;
+        background: #0b1635;
+        padding: 15px 0;
+        border-radius: 10px;
+        border: 1px solid #34ace0;
+        margin-top: 10px;
+        display: flex;
+    }
+
+    .marquee-content {
+        display: inline-block;
+        padding-left: 100%; /* শুরুতে স্ক্রিনের বাইরে থাকবে */
+        animation: scroll-left 120s linear infinite; 
+        font-size: 13px;
+        color: #2ed573;
+        font-weight: bold;
+    }
+
+    .marquee-content span {
+        display: inline-block;
+        margin-right: 50px; /* প্রতিটি আইটেমের মাঝে গ্যাপ */
+    }
+
+    @keyframes scroll-left {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-100%); }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Notice Box -->
+    <div class="rgb-box">
+        <div class="rgb-inner">
+            <div class="notice-title">  
+                ⚠️ IMPORTANT NOTICE – PLEASE READ BEFORE STARTING THE TASK ⚠️  
+            </div>
+            <div class="notice-text">
+                <p>1. Yeh ek manual WhatsApp task system hai. Jab aap Start Task button par click karenge, toh aap seedhe hamare Telegram agent ke paas chale jayenge. Agent se contact karne ke baad, aapko apna WhatsApp number dena hoga.</p>
+                <p>2. Agar turant reply nahi milta, toh please 2-3 minutes wait karein. Hamara agent aapse contact karega. Task poora hone ke baad, apna User ID aur registered Gmail address zaroor dein.</p>
+                <p>3. Har ek successfully bheje gaye SMS ke liye aapko ₹2 milenge.</p>
+                <p>4. Normal WhatsApp task ₹1.5 se ₹2 tak hai.</p>
+                <p style="color: #ff4757; font-weight: bold;">5. Task ka samay dopahar 2:00 PM se shaam 5:00 PM tak aur raat 8:00 PM se 10:00 PM tak hai. Is samay ke alawa kiya gaya kaam credit nahi hoga. WhatsApp task sirf isi nishchit samay par hi chalu rahega.</p>
+            </div>
+        </div>  
+    </div>
+
+    <!-- Start Task Button -->
+    <div class="rgb-box">  
+        <div class="rgb-inner">
+            <!-- Telegram link with Auto-message -->
+            <button class="task-btn" onclick="window.location.href='https://t.me/WH46mk?text=WH.(Start%20Task)'">  
+                START TASK  
+            </button>  
+        </div>  
+    </div>
+
+    <!-- Earning Slider (Recent Payouts) -->
+    <div class="rgb-box">
+        <div class="rgb-inner">
+            <div style="font-size: 14px; color: #ffd700; margin-bottom: 10px; text-align: center; font-weight: bold;">
+                Recent Payouts 💸
+            </div>
+            <div class="marquee-container">
+                <div class="marquee-content">
+                    <span>su****b@gmail.com earn 💸 ₹450</span>
+                    <span>no****a@gmail.com earn 💸 ₹1950</span>
+                    <span>am****12@gmail.com earn 💸 ₹3200</span>
+                    <span>ra****u@gmail.com earn 💸 ₹890</span>
+                    <span>vi****y@gmail.com earn 💸 ₹4100</span>
+                    <span>ka****l@gmail.com earn 💸 ₹150</span>
+                    <span>mo****it@gmail.com earn 💸 ₹2750</span>
+                    <span>ni****h@gmail.com earn 💸 ₹4980</span>
+                    <span>an****a@gmail.com earn 💸 ₹1200</span>
+                    <span>sa****m@gmail.com earn 💸 ₹3500</span>
+                    <span>pr****k@gmail.com earn 💸 ₹670</span>
+                    <span>ro****n@gmail.com earn 💸 ₹2100</span>
+                    <span>ta****u@gmail.com earn 💸 ₹4400</span>
+                    <span>ma****h@gmail.com earn 💸 ₹180</span>
+                    <span>is****m@gmail.com earn 💸 ₹3300</span>
+                    <span>de****p@gmail.com earn 💸 ₹4800</span>
+                    <span>jo****y@gmail.com earn 💸 ₹950</span>
+                    <span>ki****n@gmail.com earn 💸 ₹1300</span>
+                    <span>po****a@gmail.com earn 💸 ₹2600</span>
+                    <span>sh****m@gmail.com earn 💸 ₹3900</span>
+                    <span>ab****i@gmail.com earn 💸 ₹450</span>
+                    <span>re****a@gmail.com earn 💸 ₹1100</span>
+                    <span>mi****l@gmail.com earn 💸 ₹2900</span>
+                    <span>ha****h@gmail.com earn 💸 ₹3700</span>
+                    <span>gu****n@gmail.com earn 💸 ₹800</span>
+                    <span>fa****z@gmail.com earn 💸 ₹4200</span>
+                    <span>bi****u@gmail.com earn 💸 ₹2200</span>
+                    <span>su****m@gmail.com earn 💸 ₹500</span>
+                    <span>kh****n@gmail.com earn 💸 ₹1600</span>
+                    <span>za****r@gmail.com earn 💸 ₹2400</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back to Dashboard -->
+    <div class="rgb-box">  
+        <div class="rgb-inner">
+            <button class="back-btn" onclick="window.location.href='dashboard.html'">  
+                Back to Dashboard  
+            </button>  
+        </div>  
+    </div>
+</div>
+
+</body>
+</html>
