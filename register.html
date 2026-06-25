@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,89 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WH46 Register</title>
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial,sans-serif;
-        }
-
-        body{
-            background:#0f172a;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            min-height:100vh;
-            padding:20px;
-        }
-
-        .container{
-            width:100%;
-            max-width:420px;
-            background:#1e293b;
-            padding:30px;
-            border-radius:20px;
-            box-shadow:0 0 25px rgba(37,99,235,.3);
-        }
-
-        .logo{
-            text-align:center;
-            font-size:32px;
-            font-weight:bold;
-            color:#60a5fa;
-            margin-bottom:10px;
-        }
-
-        .subtitle{
-            text-align:center;
-            color:#cbd5e1;
-            margin-bottom:25px;
-        }
-
-        .input-box{
-            margin-bottom:15px;
-        }
-
-        .input-box input{
-            width:100%;
-            padding:14px;
-            border:none;
-            outline:none;
-            border-radius:10px;
-            background:#334155;
-            color:white;
-            font-size:16px;
-        }
-
-        .input-box input::placeholder{
-            color:#cbd5e1;
-        }
-
-        .btn{
-            width:100%;
-            padding:14px;
-            background:#2563eb;
-            border:none;
-            border-radius:10px;
-            color:white;
-            font-size:16px;
-            font-weight:bold;
-            cursor:pointer;
-        }
-
-        .btn:hover{
-            background:#1d4ed8;
-        }
-
-        .login-link{
-            text-align:center;
-            margin-top:20px;
-        }
-
-        .login-link a{
-            color:#60a5fa;
-            text-decoration:none;
-        }
+        /* আপনার সব CSS এখানে থাকবে (অপরিবর্তিত) */
+        *{ margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
+        body{ background:#0f172a; display:flex; justify-content:center; align-items:center; min-height:100vh; padding:20px; }
+        .container{ width:100%; max-width:420px; background:#1e293b; padding:30px; border-radius:20px; box-shadow:0 0 25px rgba(37,99,235,.3); }
+        .logo{ text-align:center; font-size:32px; font-weight:bold; color:#60a5fa; margin-bottom:10px; }
+        .subtitle{ text-align:center; color:#cbd5e1; margin-bottom:25px; }
+        .input-box{ margin-bottom:15px; }
+        .input-box input{ width:100%; padding:14px; border:none; outline:none; border-radius:10px; background:#334155; color:white; font-size:16px; }
+        .input-box input::placeholder{ color:#cbd5e1; }
+        .btn{ width:100%; padding:14px; background:#2563eb; border:none; border-radius:10px; color:white; font-size:16px; font-weight:bold; cursor:pointer; }
+        .btn:hover{ background:#1d4ed8; }
+        .login-link{ text-align:center; margin-top:20px; }
+        .login-link a{ color:#60a5fa; text-decoration:none; }
     </style>
 </head>
 <body>
@@ -121,7 +50,16 @@
     <script type="module">
         import { auth, db } from "./firebase.js";
         import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-        import { doc, setDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+        
+        // ১. কালেকশন এবং অ্যাডডক ইম্পোর্ট করা হয়েছে (inviteHistory-র জন্য)
+        import { doc, setDoc, addDoc, collection } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+        // ২. রেফারেল লিংক থেকে অটোমেটিক কোড নেওয়ার লজিক
+        const urlParams = new URLSearchParams(window.location.search);
+        const refId = urlParams.get('ref');
+        if(refId) {
+            document.getElementById("inviteCode").value = refId;
+        }
 
         const registerForm = document.getElementById("registerForm");
 
@@ -131,26 +69,40 @@
             const fullName = document.getElementById("fullName").value;
             const email = document.getElementById("email").value;
             const phone = document.getElementById("phone").value;
-            const inviteCode = document.getElementById("inviteCode").value;
+            const inviteCodeInput = document.getElementById("inviteCode").value;
             const password = document.getElementById("password").value;
 
             try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 const user = userCredential.user;
 
-                // আপনার দেওয়া নতুন কোডটি এখানে বসানো হয়েছে
+                // ৩. আপনার দেওয়া ইমেজ অনুযায়ী 'users' কালেকশনে ডাটা সেভ
                 await setDoc(doc(db, "users", user.uid), {
                     fullName: fullName,
                     email: email,
                     phone: phone,
-                    inviteCode: inviteCode,
+                    inviteCode: inviteCodeInput, // ইনপুট বক্স থেকে নেওয়া কোড
                     balance: 50,
                     completedTasks: 0,
                     totalEarnings: 50,
                     totalWithdrawal: 0,
                     earningHistory: "Signup Bonus🎁 +₹50",
-                    createdAt: Date.now()
+                    createdAt: Date.now(),
+                    referredBy: inviteCodeInput || "none", // রেফারার ট্র্যাকিং
+                    referralPaid: false // বোনাস একবারই দেওয়ার জন্য
                 });
+
+                // ৪. আপনার দেওয়া ইমেজ অনুযায়ী 'inviteHistory' কালেকশনে ডাটা সেভ
+                if(inviteCodeInput && inviteCodeInput !== "") {
+                    await addDoc(collection(db, "inviteHistory"), {
+                        date: new Date(),
+                        invitedUid: user.uid,
+                        inviterCode: "WH45-" + inviteCodeInput.substring(0, 5).toUpperCase(),
+                        inviterUid: inviteCodeInput, // রেফারার এর UID
+                        reward: "50",
+                        status: "PENDING"
+                    });
+                }
 
                 alert("Registration Successful!");
                 window.location.href = "login.html";
@@ -162,6 +114,3 @@
     </script>
 </body>
 </html>
-
-
-
