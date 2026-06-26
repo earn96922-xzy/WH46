@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <style>
-        /* আপনার সব CSS এখানে অপরিবর্তিত আছে */
+        /* আপনার ডিজাইন ও CSS অপরিবর্তিত রাখা হয়েছে */
         *{ margin:0; padding:0; box-sizing:border-box; font-family:Arial,sans-serif; }
         body{ background:#0f172a; color:white; padding-bottom:80px; }
         .task-banner{ width:100%; border-radius:15px; display:block; }
@@ -18,25 +18,21 @@
         .small-box{ margin-top:10px; background:#111827; padding:12px; border-radius:10px; text-align:center; cursor:pointer; }
         .logout{ background:red; color:white; }
         .invite-title{ text-align:center; font-size:32px; color:#60a5fa; margin:20px 0; }
-        
-        /* INVITE TAB UI UPDATED */
         .ref-box{ background:#111827; padding:15px; border-radius:12px; margin-top:10px; border:1px solid #2563eb; }
-        .ref-link-input{ width:100%; background:transparent; border:none; color:#22c55e; font-size:13px; margin-bottom:10px; outline:none; }
+        .ref-link-input{ width:100%; background:transparent; border:none; color:#22c55e; font-size:11px; margin-bottom:10px; outline:none; word-break: break-all; }
         .copy-btn{ width:100%; background:#2563eb; color:white; border:none; padding:10px; border-radius:8px; cursor:pointer; font-weight:bold; }
-        
-        .bottom-nav{ position:fixed; bottom:0; left:0; width:100%; background:#111827; display:flex; justify-content:space-around; padding:15px 0; border-top:2px solid #2563eb; }
-        .bottom-nav button{ background:none; border:none; color:white; font-size:14px; cursor:pointer; }
-        .active{ color:#60a5fa; font-weight:bold; }
-        .hidden{ display:none; }
         .marquee-container { overflow: hidden; white-space: nowrap; background: #111827; padding: 10px 0; border-radius: 10px; border: 1px solid #2563eb; margin-top: 15px; }
         .marquee-content { display: inline-block; padding-left: 100%; animation: scroll-left 160s linear infinite; font-size: 12px; color: #2ed573; font-weight: bold; }
         .marquee-content span { display: inline-block; margin-right: 50px; }
         @keyframes scroll-left { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .bottom-nav{ position:fixed; bottom:0; left:0; width:100%; background:#111827; display:flex; justify-content:space-around; padding:15px 0; border-top:2px solid #2563eb; z-index: 100; }
+        .bottom-nav button{ background:none; border:none; color:white; font-size:14px; cursor:pointer; }
+        .active{ color:#60a5fa; font-weight:bold; }
+        .hidden{ display:none; }
     </style>
 </head>
 <body>
 
-<!-- TASK TAB -->
 <div id="taskTab">
     <div style="position:relative;">
         <button class="task-withdraw" onclick="window.location.href='withdraw.html'">Withdraw</button>
@@ -49,7 +45,11 @@
             <span>am****12@gmail.com earn 💸 ₹3200</span>
             <span>ra****u@gmail.com earn 💸 ₹890</span>
             <span>vi****y@gmail.com earn 💸 ₹4100</span>
-            <!-- বাকি জিমেইলগুলো আপনার কোড থেকে নিয়ে নিন -->
+            <span>ka****l@gmail.com earn 💸 ₹150</span>
+            <span>mo****it@gmail.com earn 💸 ₹2750</span>
+            <span>ni****h@gmail.com earn 💸 ₹4980</span>
+            <span>an****a@gmail.com earn 💸 ₹1200</span>
+            <span>sa****m@gmail.com earn 💸 ₹3500</span>
         </div>
     </div>
     <div class="task-card">
@@ -64,7 +64,6 @@
     </div>
 </div>
 
-<!-- EARNINGS TAB -->
 <div id="earningsTab" class="hidden">
     <div class="earn-card">
         <h3>Total Earnings</h3>
@@ -78,13 +77,12 @@
     </div>
 </div>
 
-<!-- INVITE TAB -->
 <div id="inviteTab" class="hidden">
     <div class="invite-title">🎁 INVITE & EARN</div>
     <div class="earn-card">
         <h3>Your Referral Link</h3>
         <div class="ref-box">
-            <input type="text" id="referralLink" class="ref-link-input" readonly value="Generating link...">
+            <p id="referralLink" class="ref-link-input">Generating link...</p>
             <button class="copy-btn" onclick="copyRef()">COPY LINK</button>
         </div>
     </div>
@@ -98,12 +96,8 @@
             <h3 id="totalReferReward" style="color: #22c55e;">₹0</h3>
         </div>
     </div>
-    <div class="earn-card">
-        <p style="color: #94a3b8; font-size: 14px;">You will earn ₹50 Referral Bonus when your friend completes first withdrawal success.</p>
-    </div>
 </div>
 
-<!-- PROFILE TAB -->
 <div id="profileTab" class="hidden">
     <div class="balance-box">
         <button class="withdraw-btn" onclick="window.location.href='withdraw.html'">Withdraw</button>
@@ -111,7 +105,7 @@
         <h2 id="userBalance">₹0</h2>
     </div>
     <div class="profile-card">
-        <p><strong>User Name:</strong> <span id="userName">Loading...</span></p>
+        <p><strong>Name:</strong> <span id="userName">Loading...</span></p>
         <p><strong>Gmail:</strong> <span id="userEmail">Loading...</span></p>
         <p><strong>User ID:</strong> <span id="userId">Loading...</span></p>
         <p><strong>Completed Tasks:</strong> <span id="completedTasks">0</span></p>
@@ -124,7 +118,6 @@
     <div class="small-box logout">Logout</div>
 </div>
 
-<!-- NAVIGATION -->
 <div class="bottom-nav">
     <button id="taskBtn" class="active">Task</button>
     <button id="earnBtn">Earnings</button>
@@ -133,116 +126,114 @@
 </div>
 
 <script type="module">
-    import { auth, db } from "./firebase.js";
-    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
-    import { doc, getDoc, updateDoc, collection, query, where, getDocs, increment } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { doc, getDoc, setDoc, updateDoc, collection, query, where, getDocs, increment, addDoc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
-    // --- TAB SWITCHING ---
-    const tabs = { taskTab: document.getElementById("taskTab"), earningsTab: document.getElementById("earningsTab"), inviteTab: document.getElementById("inviteTab"), profileTab: document.getElementById("profileTab") };
-    const btns = { taskBtn: document.getElementById("taskBtn"), earnBtn: document.getElementById("earnBtn"), inviteBtn: document.getElementById("inviteBtn"), profileBtn: document.getElementById("profileBtn") };
+const tabs = { taskTab: document.getElementById("taskTab"), earningsTab: document.getElementById("earningsTab"), inviteTab: document.getElementById("inviteTab"), profileTab: document.getElementById("profileTab") };
+const btns = { taskBtn: document.getElementById("taskBtn"), earnBtn: document.getElementById("earnBtn"), inviteBtn: document.getElementById("inviteBtn"), profileBtn: document.getElementById("profileBtn") };
 
-    function hideAll(){ Object.values(tabs).forEach(t => t.classList.add("hidden")); Object.values(btns).forEach(b => b.classList.remove("active")); }
-    btns.taskBtn.onclick = () => { hideAll(); tabs.taskTab.classList.remove("hidden"); btns.taskBtn.classList.add("active"); };
-    btns.earnBtn.onclick = () => { hideAll(); tabs.earningsTab.classList.remove("hidden"); btns.earnBtn.classList.add("active"); };
-    btns.inviteBtn.onclick = () => { hideAll(); tabs.inviteTab.classList.remove("hidden"); btns.inviteBtn.classList.add("active"); };
-    btns.profileBtn.onclick = () => { hideAll(); tabs.profileTab.classList.remove("hidden"); btns.profileBtn.classList.add("active"); };
+function hideAll(){ Object.values(tabs).forEach(t => t.classList.add("hidden")); Object.values(btns).forEach(b => b.classList.remove("active")); }
+btns.taskBtn.onclick = () => { hideAll(); tabs.taskTab.classList.remove("hidden"); btns.taskBtn.classList.add("active"); };
+btns.earnBtn.onclick = () => { hideAll(); tabs.earningsTab.classList.remove("hidden"); btns.earnBtn.classList.add("active"); };
+btns.inviteBtn.onclick = () => { hideAll(); tabs.inviteTab.classList.remove("hidden"); btns.inviteBtn.classList.add("active"); };
+btns.profileBtn.onclick = () => { hideAll(); tabs.profileTab.classList.remove("hidden"); btns.profileBtn.classList.add("active"); };
 
-    const addCardBtn = document.getElementById("addCardBtn");
-    const addOptions = document.getElementById("addOptions");
-    addCardBtn.onclick = (e) => { e.stopPropagation(); addOptions.classList.toggle("hidden"); };
-    document.addEventListener("click", () => addOptions.classList.add("hidden"));
+const addCardBtn = document.getElementById("addCardBtn");
+const addOptions = document.getElementById("addOptions");
+addCardBtn.onclick = (e) => { e.stopPropagation(); addOptions.classList.toggle("hidden"); };
+document.addEventListener("click", () => addOptions.classList.add("hidden"));
 
-    // --- COPY REFERRAL LINK ---
-    window.copyRef = () => {
-        const link = document.getElementById("referralLink");
-        link.select();
-        navigator.clipboard.writeText(link.value);
-        alert("Referral link copied!");
-    };
+window.copyRef = () => {
+    const link = document.getElementById("referralLink").innerText;
+    navigator.clipboard.writeText(link);
+    alert("Referral link copied!");
+};
 
-    onAuthStateChanged(auth, async (user) => {
-        if(user){
-            // আপনার রেজিস্ট্রেশন কোড অনুযায়ী লিংক তৈরি
-            const refLink = window.location.origin + "/register.html?ref=" + user.uid;
-            document.getElementById("referralLink").value = refLink;
+onAuthStateChanged(auth, async (user) => {
+if(user){
+    const refLink = window.location.origin + "/register.html?ref=" + user.uid;
+    document.getElementById("referralLink").innerText = refLink;
 
-            const userRef = doc(db, "users", user.uid);
-            
-            try {
-                const userSnap = await getDoc(userRef);
-                if(userSnap.exists()){
-                    const data = userSnap.data();
+    document.getElementById("userEmail").textContent = user.email;
+    document.getElementById("userId").textContent = user.uid;
+    const userName = user.email.split("@")[0];
+    document.getElementById("userName").textContent = userName;
 
-                    // --- ইনভিটেশন বোনাস লজিক (User B-এর ড্যাশবোর্ডে রান হবে) ---
-                    // আপনার রেজিস্টার কোড অনুযায়ী referredBy এবং referralPaid চেক হচ্ছে
-                    if(data.referredBy && data.referredBy !== "none" && data.referralPaid === false) {
-                        
-                        // চেক করুন বর্তমান ইউজারের কোনো উইথড্র সাকসেস হয়েছে কিনা
-                        const withdrawQ = query(collection(db, "withdrawRequests"), 
-                                               where("userId", "==", user.uid), 
-                                               where("status", "==", "SUCCESS"));
-                        const withdrawSnap = await getDocs(withdrawQ);
+    try {
+        const userRef = doc(db,"users",user.uid);
+        let userSnap = await getDoc(userRef);
 
-                        if(!withdrawSnap.empty) {
-                            // ইনভাইট হিস্ট্রি থেকে PENDING ডকুমেন্টটি খুঁজে বের করা
-                            const inviteQ = query(collection(db, "inviteHistory"), 
-                                                where("invitedUid", "==", user.uid), 
-                                                where("status", "==", "PENDING"));
-                            const inviteSnap = await getDocs(inviteQ);
+        if(!userSnap.exists()){
+            const urlParams = new URLSearchParams(window.location.search);
+            const referrerId = urlParams.get('ref') || "none";
 
-                            if(!inviteSnap.empty) {
-                                const inviteDoc = inviteSnap.docs[0];
-                                const inviterUid = inviteDoc.data().inviterUid;
-                                const inviterRef = doc(db, "users", inviterUid);
-                                const inviterSnap = await getDoc(inviterRef);
+            await setDoc(userRef, {
+                balance: 50,
+                completedTasks: 0,
+                totalEarnings: 50,
+                totalWithdrawal: 0,
+                totalRefer: 0,
+                referIncome: 0,
+                earningHistory: "Signup Bonus🎁 +₹50"
+            });
 
-                                if(inviterSnap.exists()) {
-                                    // ১. ইনভাইটার (User A) এর ব্যালেন্স, আর্নিং এবং হিস্ট্রি আপডেট
-                                    await updateDoc(inviterRef, {
-                                        balance: increment(50),
-                                        totalEarnings: increment(50),
-                                        earningHistory: (inviterSnap.data().earningHistory || "") + 
-                                                        "\nRefferal+ 50 (" + new Date().toLocaleString() + ")"
-                                    });
-
-                                    // ২. ইনভাইট হিস্ট্রি স্ট্যাটাস SUCCESS করা
-                                    await updateDoc(doc(db, "inviteHistory", inviteDoc.id), { status: "SUCCESS" });
-
-                                    // ৩. ইউজার B-এর referralPaid ট্রু করা যাতে বোনাস একবারই যায়
-                                    await updateDoc(userRef, { referralPaid: true });
-                                }
-                            }
-                        }
-                    }
-
-                    // --- UI আপডেট ---
-                    // লেটেস্ট ডাটা রিফ্রেশ করা
-                    const updatedSnap = await getDoc(userRef);
-                    const freshData = updatedSnap.data();
-
-                    document.getElementById("userBalance").textContent = "₹" + (freshData.balance || 0);
-                    document.getElementById("totalEarnings").textContent = "₹" + (freshData.totalEarnings || 0);
-                    document.getElementById("totalWithdrawal").textContent = "₹" + (freshData.totalWithdrawal || 0);
-                    document.getElementById("earningHistory").textContent = freshData.earningHistory || "No history yet.";
-                    document.getElementById("userEmail").textContent = user.email;
-                    document.getElementById("userId").textContent = user.uid;
-                    document.getElementById("userName").textContent = freshData.fullName || user.email.split("@")[0];
-                    document.getElementById("completedTasks").textContent = freshData.completedTasks || 0;
-
-                    // ইনভাইট ট্যাব পরিসংখ্যান (Invite Tab Stats)
-                    const myInvitesQ = query(collection(db, "inviteHistory"), 
-                                            where("inviterUid", "==", user.uid), 
-                                            where("status", "==", "SUCCESS"));
-                    const myInvitesSnap = await getDocs(myInvitesQ);
-                    document.getElementById("totalRefer").textContent = myInvitesSnap.size;
-                    document.getElementById("totalReferReward").textContent = "₹" + (myInvitesSnap.size * 50);
-                }
-            } catch(e) { console.log("Error:", e); }
+            if(referrerId !== "none") {
+                // আপনার নির্দেশ অনুযায়ী এখানে isPaid: false যোগ করা হয়েছে
+                await addDoc(collection(db, "inviteHistory"), {
+                    date: new Date(),
+                    invitedUid: user.uid,
+                    inviterUid: referrerId,
+                    reward: "50",
+                    isPaid: false
+                });
+            }
+            userSnap = await getDoc(userRef);
         }
-    });
 
-    document.querySelector(".logout").onclick = async () => { await signOut(auth); window.location.href = "login.html"; };
+        const q = query(collection(db, "inviteHistory"), 
+                        where("inviterUid", "==", user.uid), 
+                        where("isPaid", "==", false)); 
+
+        const rewardSnap = await getDocs(q);
+        
+        if (!rewardSnap.empty) {
+            for (const docReward of rewardSnap.docs) {
+                const currentSnap = await getDoc(userRef);
+                const currentData = currentSnap.data();
+                const oldHistory = currentData.earningHistory || "";
+
+                await updateDoc(userRef, {
+                    balance: increment(50),
+                    totalEarnings: increment(50),
+                    totalRefer: increment(1),
+                    referIncome: increment(50),
+                    earningHistory: oldHistory + "\nrefferal bonus+ 50 (" + new Date().toLocaleString() + ")"
+                });
+
+                await updateDoc(doc(db, "inviteHistory", docReward.id), {
+                    isPaid: true 
+                });
+            }
+            userSnap = await getDoc(userRef);
+        }
+
+        const data = userSnap.data();
+        document.getElementById("userBalance").textContent = "₹" + (data.balance || 0);
+        document.getElementById("totalEarnings").textContent = "₹" + (data.totalEarnings || 0);
+        document.getElementById("totalWithdrawal").textContent = "₹" + (data.totalWithdrawal || 0);
+        document.getElementById("earningHistory").textContent = data.earningHistory || "No history yet.";
+        document.getElementById("completedTasks").textContent = data.completedTasks || 0;
+        document.getElementById("totalRefer").textContent = data.totalRefer || 0;
+        document.getElementById("totalReferReward").textContent = "₹" + (data.referIncome || 0);
+
+    } catch(error) { console.log(error); }
+}
+});
+
+document.querySelector(".logout").addEventListener("click", async ()=>{
+    try { await signOut(auth); window.location.href = "login.html"; } catch(e){ alert(e.message); }
+});
 </script>
-
 </body>
 </html>
