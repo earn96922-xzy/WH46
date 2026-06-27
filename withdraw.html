@@ -113,11 +113,14 @@ font-size:16px;
 cursor:pointer;
 }
 
+/* পরিবর্তন ৪: হিস্ট্রি আইটেম স্টাইল আপডেট */
 .history-item{
 background:#111827;
 padding:10px;
 border-radius:10px;
 margin-top:10px;
+color:#ffffff;
+font-weight:700;
 }
 </style>
 
@@ -143,7 +146,12 @@ margin-top:10px;
 <h3>Select Amount</h3>
 
 <div class="amount-grid">
-<button class="amount-btn">₹220</button>
+<!-- পরিবর্তন ১: জনপ্রিয় ট্যাগ যুক্ত করা হয়েছে -->
+<button class="amount-btn">
+    ₹220
+    <br>
+    <small style="color:#facc15;">🔥Popular</small>
+</button>
 <button class="amount-btn">₹330</button>
 <button class="amount-btn">₹540</button>
 <button class="amount-btn">₹1080</button>
@@ -213,7 +221,7 @@ btn.style.background="#2563eb";
 
 selectedAmount =
 parseInt(
-btn.innerText.replace("₹","")
+btn.innerText.replace("₹","").replace("🔥Popular","")
 );
 
 document.getElementById("selectedAmount").value =
@@ -382,7 +390,7 @@ historySnap.forEach((withdrawDoc)=>{
 const data =
 withdrawDoc.data();
 
-// পরিবর্তন ১: হিস্ট্রিতে ডেট যুক্ত করা হয়েছে
+// পরিবর্তন ২: স্ট্যাটাস অনুযায়ী ডাইনামিক কালার যুক্ত করা হয়েছে
 historyBox.innerHTML += `
 
 <div class="history-item">
@@ -391,7 +399,17 @@ historyBox.innerHTML += `
 
 <br>
 
-Status : ${data.status}
+Status :
+<span style="
+color:
+${data.status === 'PENDING' ? '#facc15' :
+data.status === 'APPROVED' ? '#3b82f6' :
+data.status === 'SUCCESS' ? '#22c55e' :
+data.status === 'REJECTED' ? '#ef4444' :
+'white'}
+">
+${data.status}
+</span>
 
 <br>
 
@@ -477,7 +495,6 @@ new Date().toISOString()
 
 );
 
-// পরিবর্তন ৩: earningHistory আপডেট করার লজিক যুক্ত করা হয়েছে
 const userRef =
 doc(db,"users",currentUser.uid);
 
@@ -520,7 +537,7 @@ document.getElementById("withdrawHistory")
 document.getElementById("withdrawHistory").innerHTML="";
 }
 
-// পরিবর্তন ২: তাৎক্ষণিক হিস্ট্রি আপডেটে ডেট যুক্ত করা হয়েছে
+// পরিবর্তন ৩: তাৎক্ষণিক হিস্ট্রি আপডেটে কালার কোড যুক্ত করা হয়েছে
 document.getElementById("withdrawHistory")
 .innerHTML += `
 
@@ -530,7 +547,10 @@ document.getElementById("withdrawHistory")
 
 <br>
 
-Status : PENDING
+Status :
+<span style="color:#facc15;">
+PENDING
+</span>
 
 <br>
 
@@ -551,4 +571,3 @@ alert("Failed to submit request. Please try again.");
 
 </body>
 </html>
-
