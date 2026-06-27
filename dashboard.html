@@ -96,6 +96,28 @@
             <h3 id="totalReferReward" style="color: #22c55e;">₹0</h3>
         </div>
     </div>
+
+    <!-- আপনার নির্দেশ অনুযায়ী নতুন টেক্সট বক্সটি এখানে যুক্ত করা হলো -->
+    <div style="
+    margin-top:20px;
+    padding:15px;
+    background:#111827;
+    border:2px solid #facc15;
+    border-radius:15px;
+    text-align:center;
+    box-shadow:0 0 15px rgba(250,204,21,0.4);
+    ">
+        <p style="
+        color:#facc15;
+        font-size:16px;
+        font-weight:900;
+        text-transform:uppercase;
+        letter-spacing:1px;
+        line-height:1.6;
+        ">
+        ⚡ WHEN YOUR FRIEND MAKES THEIR FIRST WITHDRAWAL, YOU WILL RECEIVE A REFERRAL BONUS ⚡
+        </p>
+    </div>
 </div>
 
 <div id="profileTab" class="hidden">
@@ -231,21 +253,17 @@ if(user){
         }
         let extraEarning = finalTotal - 50; 
 
-        document.getElementById("totalEarnings").textContent = "₹" + finalTotal;
-        document.getElementById("totalWithdrawal").textContent = "₹" + (data.totalWithdrawal || 0);
-        document.getElementById("earningHistory").textContent = history;
-
         if(extraEarning > 0){
-            // আপনার নির্দেশ অনুযায়ী এই অংশটি পরিবর্তন করা হলো
             await updateDoc(userRef,{
                 totalEarnings: finalTotal,
                 balance: finalTotal
             });
         }
 
-        // আপনার নির্দেশ অনুযায়ী এই অংশটি পরিবর্তন করা হলো
         document.getElementById("userBalance").textContent = "₹" + finalTotal;
-        
+        document.getElementById("totalEarnings").textContent = "₹" + finalTotal;
+        document.getElementById("totalWithdrawal").textContent = "₹" + (data.totalWithdrawal || 0);
+        document.getElementById("earningHistory").textContent = history;
         document.getElementById("completedTasks").textContent = data.completedTasks || 0;
         document.getElementById("totalRefer").textContent = data.totalRefer || 0;
         document.getElementById("totalReferReward").textContent = "₹" + (data.referIncome || 0);
