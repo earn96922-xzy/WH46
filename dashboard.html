@@ -219,7 +219,6 @@ if(user){
 
         const data = userSnap.data();
         
-        // আপনার অনুরোধ অনুযায়ী পরিবর্তিত অংশ শুরু
         const history = data.earningHistory || "";
         const matches = history.match(/\+₹?\s*(\d+)/g);
 
@@ -230,20 +229,23 @@ if(user){
                 finalTotal += parseInt(item.replace(/[^\d]/g, ""));
             });
         }
-        let extraEarning = finalTotal - 50; // পরবর্তী if কন্ডিশনের জন্য এটি প্রয়োজন
-        // পরিবর্তিত অংশ শেষ
+        let extraEarning = finalTotal - 50; 
 
         document.getElementById("totalEarnings").textContent = "₹" + finalTotal;
         document.getElementById("totalWithdrawal").textContent = "₹" + (data.totalWithdrawal || 0);
         document.getElementById("earningHistory").textContent = history;
 
         if(extraEarning > 0){
+            // আপনার নির্দেশ অনুযায়ী এই অংশটি পরিবর্তন করা হলো
             await updateDoc(userRef,{
-                totalEarnings: finalTotal
+                totalEarnings: finalTotal,
+                balance: finalTotal
             });
         }
 
-        document.getElementById("userBalance").textContent = "₹" + (data.balance || 0);
+        // আপনার নির্দেশ অনুযায়ী এই অংশটি পরিবর্তন করা হলো
+        document.getElementById("userBalance").textContent = "₹" + finalTotal;
+        
         document.getElementById("completedTasks").textContent = data.completedTasks || 0;
         document.getElementById("totalRefer").textContent = data.totalRefer || 0;
         document.getElementById("totalReferReward").textContent = "₹" + (data.referIncome || 0);
