@@ -179,7 +179,6 @@ if(user){
             });
 
             if(referrerId !== "none") {
-                // আপনার নির্দেশ অনুযায়ী এখানে isPaid: false যোগ করা হয়েছে
                 await addDoc(collection(db, "inviteHistory"), {
                     date: new Date(),
                     invitedUid: user.uid,
@@ -219,10 +218,33 @@ if(user){
         }
 
         const data = userSnap.data();
-        document.getElementById("userBalance").textContent = "₹" + (data.balance || 0);
-        document.getElementById("totalEarnings").textContent = "₹" + (data.totalEarnings || 0);
+        
+        // পরিবর্তন শুরু: আপনার নির্দেশ অনুযায়ী Regex লজিক আপডেট করা হলো
+        const history = data.earningHistory || "";
+        const matches = history.match(/\+₹?(\d+)/g);
+        let extraEarning = 0;
+
+        if(matches){
+            matches.forEach(item => {
+                extraEarning += parseInt(item.replace(/[^\d]/g, ""));
+            });
+        }
+        // পরিবর্তন শেষ
+
+        const signupBonus = 50;
+        const finalTotal = signupBonus + extraEarning;
+
+        document.getElementById("totalEarnings").textContent = "₹" + finalTotal;
         document.getElementById("totalWithdrawal").textContent = "₹" + (data.totalWithdrawal || 0);
-        document.getElementById("earningHistory").textContent = data.earningHistory || "No history yet.";
+        document.getElementById("earningHistory").textContent = history;
+
+        if(extraEarning > 0){
+            await updateDoc(userRef,{
+                totalEarnings: finalTotal
+            });
+        }
+
+        document.getElementById("userBalance").textContent = "₹" + (data.balance || 0);
         document.getElementById("completedTasks").textContent = data.completedTasks || 0;
         document.getElementById("totalRefer").textContent = data.totalRefer || 0;
         document.getElementById("totalReferReward").textContent = "₹" + (data.referIncome || 0);
