@@ -219,20 +219,19 @@ if(user){
 
         const data = userSnap.data();
         
-        // পরিবর্তন শুরু: আপনার নির্দেশ অনুযায়ী Regex লজিক আপডেট করা হলো
+        // আপনার অনুরোধ অনুযায়ী পরিবর্তিত অংশ শুরু
         const history = data.earningHistory || "";
-        const matches = history.match(/\+₹?(\d+)/g);
-        let extraEarning = 0;
+        const matches = history.match(/\+₹?\s*(\d+)/g);
+
+        let finalTotal = 0;
 
         if(matches){
             matches.forEach(item => {
-                extraEarning += parseInt(item.replace(/[^\d]/g, ""));
+                finalTotal += parseInt(item.replace(/[^\d]/g, ""));
             });
         }
-        // পরিবর্তন শেষ
-
-        const signupBonus = 50;
-        const finalTotal = signupBonus + extraEarning;
+        let extraEarning = finalTotal - 50; // পরবর্তী if কন্ডিশনের জন্য এটি প্রয়োজন
+        // পরিবর্তিত অংশ শেষ
 
         document.getElementById("totalEarnings").textContent = "₹" + finalTotal;
         document.getElementById("totalWithdrawal").textContent = "₹" + (data.totalWithdrawal || 0);
